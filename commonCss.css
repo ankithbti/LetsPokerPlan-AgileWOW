@@ -1,0 +1,116 @@
+/** 
+------------------------------
+Common CSS for all pages 
+------------------------------
+**/
+body{
+	padding: 0px;
+	margin: 0px;
+	background-color: lightgray;
+	color: #333 ;
+}
+
+
+.right{
+	float: right;
+}
+
+.left{
+	float: left;
+}
+
+.makebigger{
+	font-size: 1.2em;
+	padding: 10px;
+}
+
+.makelittlebigger{
+	font-size: 0.8em;
+	padding: 5px;
+}
+
+hr{
+	border:none;
+	border-top-style: solid;
+	border-top-color: #333 ;
+	border-top-width: 1px;
+}
+
+/**
+--------------------------------
+CSS for Home Page
+--------------------------------
+**/
+
+.topRightMenu{
+	position: relative;
+	margin-top: 10px;
+}
+
+.topRightMenu p {
+	font-size: 1.5em;
+}
+
+
+.topHeader{
+	margin-top: 100px;
+}
+
+
+/**
+--------------------------------
+CSS for Login / Regsiter Page
+--------------------------------
+**/
+.topSection{
+	margin-top: 50px;
+}
+
+.loginWindow {
+	margin-top: 50px;
+}
+
+.loginWindow form    {
+	/*background: -webkit-gradient(linear, bottom, left 175px, from(#f1f1f1), to(#ffffff));
+	background: -moz-linear-gradient(bottom, #f1f1f1, #ffffff 175px);*/
+	background-color: #f1f1f1;
+	margin:auto;
+	margin-top: 20px;
+	position:relative;
+	width:550px;
+	/*height:450px;*/
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	font-style: italic;
+	line-height: 24px;
+	font-weight: bold;
+	text-decoration: none;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding:10px;
+	border: 1px solid #999;
+	border: inset 1px solid #333;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	padding-bottom: 40px;
+}
+
+.loginWindow form label {
+	margin-top: 20px;
+}
+
+.loginWindow form input[type='text'],
+.loginWindow form input[type='password'],
+.loginWindow form input[type='email']
+   {
+	width:375px;
+	display:block;
+	border: 1px solid #999;
+	height: 25px;
+	-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+	margin-top: 10px;
+}
