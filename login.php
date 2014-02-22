@@ -38,7 +38,7 @@ if(isset($_SESSION['userId']) ){
 if(isset($_POST['submitted']) ){
 	//echo "Form Submitted " . PHP_EL ;
 	$email = $_POST['email'];
-	$pass = $_POST['password'];
+	$pass = $_POST['mypass'];
 	//echo "Email : " . $email . " Password : " . $pass . PHP_EL ;
 	$user = new User($email, $pass, "Local");
 	//echo $user . PHP_EL ;
@@ -61,18 +61,19 @@ if(isset($_POST['submitted']) ){
 		<h1>Login System</h1>
 		<div class='loginWindow'>
 			<form action='login.php' method='post' name='loginForm' onsubmit='return isLoginFormFilledCorrectly();'>
-				<label>
-					<!-- <span>Email</span> -->
-					<input id='email' type='email' name='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" placeholder='Type your Email Id' required/>
-					<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
-				</label>
 
-				<label>
-					<!-- <span>Password</span> -->
-					<input id='password' type='password' name='password' placeholder='Type your Password' required/>
-					<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
-				</label>
-
+				<table>
+					<tr>
+						<td><span>Email</span></td>
+						<td>&nbsp;&nbsp;<input id='email' type='email' name='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" placeholder='Type your Email Id' required/></td>
+						<td>&nbsp;&nbsp;<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span></td>
+					</tr>
+					<tr>
+						<td><span>Password</span></td>
+						<td>&nbsp;&nbsp;<input id='mypass' type='password' name='mypass' required/></td>
+						<td>&nbsp;&nbsp;<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span></td>
+					</tr>
+				</table>
 				<br>
 				<input type='hidden' name='submitted' class='hidden'/>
 				<input type='submit' class='btn btn-primary' value='Login' />

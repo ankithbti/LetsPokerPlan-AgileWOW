@@ -36,8 +36,8 @@ if(isset($_SESSION['userId']) ){
 if(isset($_POST['submitted']) ){
 	//echo "Form Submitted " . PHP_EL ;
 	$email = $_POST['email'];
-	$pass = $_POST['password'];
-	$cpass = $_POST['cpassword'];
+	$pass = $_POST['mypass'];
+	$cpass = $_POST['cpass'];
 	if(strcmp($pass, $cpass) != 0){
 		echo "<div class='container' align='center'><span class='makebigger label label-warning'>" . "Password does not match with the confirm password. Please register again." . "</span><hr></div>" ;
 	}else{
@@ -65,23 +65,24 @@ if(isset($_POST['submitted']) ){
 		<h1>Registration System</h1>
 		<div class='registerWindow'>
 			<form action='register.php' method='post' name='registerForm' onsubmit='return isRegisterFormFilledCorrectly();'>
-				<label>
-					<!-- <span>Email</span> -->
-					<input id='email' type='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" name='email' placeholder='Type your Email Id' required />
-					<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
-				</label>
 
-				<label>
-					<!-- <span>Password</span> -->
-					<input id='password' type='password' name='password' placeholder='Type your Password' required/>
-					<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
-				</label>
-
-				<label>
-					<!-- <span>Confirm Password</span> -->
-					<input id='cpassword' type='password' name='cpassword' placeholder='Confirm Password' required/>
-					<span id='confirmPasswordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
-				</label>
+				<table>
+					<tr>
+						<td><span>Email</span></td>
+						<td>&nbsp;&nbsp;<input id='email' type='email' name='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" placeholder='Type your Email Id' required/></td>
+						<td>&nbsp;&nbsp;<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span></td>
+					</tr>
+					<tr>
+						<td><span>Password</span></td>
+						<td>&nbsp;&nbsp;<input id='mypass' type='password' name='mypass' required/></td>
+						<td>&nbsp;&nbsp;<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span></td>
+					</tr>
+					<tr>
+						<td><span>Confirm Password</span></td>
+						<td>&nbsp;&nbsp;<input id='cpass' type='password' name='cpass' required/></td>
+						<td>&nbsp;&nbsp;<span id='confirmPasswordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span></td>
+					</tr>
+				</table>
 
 				<br>
 				<input type='hidden' name='submitted' />

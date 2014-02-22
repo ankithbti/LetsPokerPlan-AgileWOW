@@ -21,7 +21,7 @@ function keepUserLiveStatusUptoDate ( ) {
 
 function isLoginFormFilledCorrectly(){
     var emailText = $('#email').val() ;
-    var passText = $('#password').val() ;
+    var passText = $('#mypass').val() ;
     var errMsg = "<div>";
     var isError = false ;
     if( ! isValidEmailAddress(emailText) ){
@@ -47,8 +47,8 @@ function isLoginFormFilledCorrectly(){
 
 function isRegisterFormFilledCorrectly(){
     var emailText = $('#email').val() ;
-    var passText = $('#password').val() ;
-    var confPassText = $('#cpassword').val() ;
+    var passText = $('#mypass').val() ;
+    var confPassText = $('#cpass').val() ;
     var errMsg = "<div>";
     var isError = false ;
     var validPass = false ;
@@ -97,11 +97,11 @@ function isValidPassword(password){
 }
 
 function isValidConfirmPassword(confirmPassword){
-    var pass = $('#password').val() ;
+    var pass = $('#mypass').val() ;
     if(! isValidPassword(pass) ){
         return false ;
     }
-    if(confirmPassword == $('#password').val()){
+    if(confirmPassword == pass){
         return true ;
     }
     return false ;
@@ -136,59 +136,27 @@ $(document).ready(function(){
         }
     });
 
-    $('#email').blur(function(){
-        formFieldsValid = false ;
-        // Ajax call to check whether the entered value is valid or not
-        var inputText = $('#email').val() ;
-        if(! isValidEmailAddress(inputText) ){
-            $('#emailValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
-        }else{
-            $('#emailValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
-            formFieldsValid = true ;
-        }
-    });
 
-    $('#password').keyup(function(){
+    $('#mypass').keyup(function(){
         formFieldsValid = false ;
         // Ajax call to check whether the entered value is valid or not
-        var inputText = $('#password').val() ;
-        if(! isValidPassword(inputText) ){
+        var text = $('#mypass').val() ;
+        if(! isValidPassword(text) ){
             $('#passwordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
+            //alert("Invalid password : " + text);
         }else{
             $('#passwordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
+            //alert("Valid password : " + text);
             formFieldsValid = true ;
         }
     });
 
-    $('#password').blur(function(){
-        formFieldsValid = false ;
-        // Ajax call to check whether the entered value is valid or not
-        var inputText = $('#password').val() ;
-        if(! isValidPassword(inputText) ){
-            $('#passwordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
-        }else{
-            $('#passwordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
-            formFieldsValid = true ;
-        }
-    });
 
-    $('#cpassword').keyup(function(){
+    $('#cpass').keyup(function(){
         formFieldsValid = false ;
         // Ajax call to check whether the entered value is valid or not
-        var inputText = $('#cpassword').val() ;
-        if(! isValidConfirmPassword(inputText) ){
-            $('#confirmPasswordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
-        }else{
-            $('#confirmPasswordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
-            formFieldsValid = true ;
-        }
-    });
-
-    $('#cpassword').blur(function(){
-        formFieldsValid = false ;
-        // Ajax call to check whether the entered value is valid or not
-        var inputText = $('#cpassword').val() ;
-        if(! isValidConfirmPassword(inputText) ){
+        var conf = $('#cpass').val() ;
+        if(! isValidConfirmPassword(conf) ){
             $('#confirmPasswordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
         }else{
             $('#confirmPasswordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
