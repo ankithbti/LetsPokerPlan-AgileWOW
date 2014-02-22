@@ -111,6 +111,8 @@ function isValidConfirmPassword(confirmPassword){
 
 $(document).ready(function(){
 
+    $('input, textarea').placeholder();
+
     // Run immediately
     keepUserLiveStatusUptoDate() ;
 
