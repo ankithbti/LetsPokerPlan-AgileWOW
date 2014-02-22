@@ -22,16 +22,16 @@ function keepUserLiveStatusUptoDate ( ) {
 function isLoginFormFilledCorrectly(){
     var emailText = $('#email').val() ;
     var passText = $('#password').val() ;
-    var errMsg = "<div class='label label-warning'>";
+    var errMsg = "<div>";
     var isError = false ;
     if( ! isValidEmailAddress(emailText) ){
         isError = true ;
-        errMsg += "<p class='makesmallbigger'>Email Address is not Valid. </p>" ;
+        errMsg += "<p class='makesmallbigger label label-info'>Email Address is not Valid. </p>" ;
     }
 
     if(! isValidPassword(passText) ){
         isError = true ;
-        errMsg += "<p class='makesmallbigger'>Password is not Valid. </p>"; 
+        errMsg += "<p class='makesmallbigger label label-info'>Password is not Valid. </p>"; 
     }
     errMsg += "</div>" ;
 
@@ -49,20 +49,27 @@ function isRegisterFormFilledCorrectly(){
     var emailText = $('#email').val() ;
     var passText = $('#password').val() ;
     var confPassText = $('#cpassword').val() ;
-    var errMsg = "<div class='label label-warning'>";
+    var errMsg = "<div>";
     var isError = false ;
+    var validPass = false ;
     if( ! isValidEmailAddress(emailText) ){
         isError = true ;
-        errMsg += "<p class='makesmallbigger'>Email Address is not Valid. </p>" ;
+        errMsg += "<span class='makesmallbigger label label-info'>Email Address is not Valid. </span><br>" ;
     }
 
     if(! isValidPassword(passText) ){
         isError = true ;
-        errMsg += "<p class='makesmallbigger'>Password is not Valid. </p>";
+        errMsg += "<span class='makesmallbigger label label-info'>Password is not Valid. </span><br>";
+    }else{
+        validPass = true ;
     }
     if(! isValidConfirmPassword(confPassText) ){
         isError = true ;
-        errMsg += "<p class='makesmallbigger'>Confirm Password does not match with Password. </p>"; 
+        if(validPass){
+            errMsg += "<span class='makesmallbigger label label-info'>Confirm Password does not match with Password. </span>"; 
+        }else{
+            errMsg += "<span class='makesmallbigger label label-info'>No valid password entered yet. </span>"; 
+        }
     }
     errMsg += "</div>" ;
 
@@ -90,6 +97,10 @@ function isValidPassword(password){
 }
 
 function isValidConfirmPassword(confirmPassword){
+    var pass = $('#password').val() ;
+    if(! isValidPassword(pass) ){
+        return false ;
+    }
     if(confirmPassword == $('#password').val()){
         return true ;
     }

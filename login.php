@@ -63,7 +63,7 @@ if(isset($_POST['submitted']) ){
 			<form action='login.php' method='post' name='loginForm' onsubmit='return isLoginFormFilledCorrectly();'>
 				<label>
 					<!-- <span>Email</span> -->
-					<input id='email' type='email' name='email' placeholder='Type your Email Id' required/>
+					<input id='email' type='email' name='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" placeholder='Type your Email Id' required/>
 					<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
