@@ -27,6 +27,10 @@ if(isset($_SESSION['userId']) ){
 
 	<div class='container topRightMenu'>
 		<p class='right'><a href='register.php'>Register</a> | <a href='home.php'>Back</a></p>
+		<div class='clearFloat'></div>
+	</div>
+
+	<div class='container' id='loginFormErrors' align='center'>
 	</div>
 
 <?php
@@ -47,7 +51,6 @@ if(isset($_POST['submitted']) ){
 	}else{
 		echo "<div class='container' align='center'><span class='makebigger label label-warning'>" . $user->getAuthError() . "</span><hr></div>" ;
 	}
-	exit(0);
 }else{
 	//echo "Not submitted " . PHP_EL ;
  }
@@ -57,15 +60,17 @@ if(isset($_POST['submitted']) ){
 	<div class='container topSection' align='center'>
 		<h1>Login System</h1>
 		<div class='loginWindow'>
-			<form action='login.php' method='post' name='loginForm'>
+			<form action='login.php' method='post' name='loginForm' onsubmit='return isLoginFormFilledCorrectly();'>
 				<label>
 					<!-- <span>Email</span> -->
 					<input id='email' type='email' name='email' placeholder='Type your Email Id' required/>
+					<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
 				<label>
 					<!-- <span>Password</span> -->
 					<input id='password' type='password' name='password' placeholder='Type your Password' required/>
+					<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
 				<br>
@@ -73,6 +78,8 @@ if(isset($_POST['submitted']) ){
 				<input type='submit' class='btn btn-primary' value='Login' />
 			</form>
 		</div>
+
+		<span class='makesmallbigger smallmarginfromtop label'>Password should be of length between 6-16 characters. It should have atleast one numberic and one special character.</span>
 	</div>
 
 

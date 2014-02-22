@@ -28,6 +28,9 @@ if(isset($_SESSION['userId']) ){
 		<p class='right'><a href='login.php'>Login</a> | <a href='home.php'>Back</a></p>
 	</div>
 
+	<div class='container' id='registerFormErrors' align='center'>
+	</div>
+
 <?php
 
 if(isset($_POST['submitted']) ){
@@ -50,7 +53,6 @@ if(isset($_POST['submitted']) ){
 		}else{
 			echo "<div class='container' align='center'><span class='makebigger label label-warning'>" . $user->getRegError() . "</span><hr></div>" ;
 		}
-		exit(0);
 	}
 	
 }else{
@@ -61,21 +63,24 @@ if(isset($_POST['submitted']) ){
 
 	<div class='container topSection' align='center'>
 		<h1>Registration System</h1>
-		<div class='loginWindow'>
-			<form action='register.php' method='post' name='registerForm'>
+		<div class='registerWindow'>
+			<form action='register.php' method='post' name='registerForm' onsubmit='return isRegisterFormFilledCorrectly();'>
 				<label>
 					<!-- <span>Email</span> -->
 					<input id='email' type='email' value="<?php if(isset($_POST['email'])){ echo $_POST['email'] ; } ?>" name='email' placeholder='Type your Email Id' required />
+					<span id='emailValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
 				<label>
 					<!-- <span>Password</span> -->
 					<input id='password' type='password' name='password' placeholder='Type your Password' required/>
+					<span id='passwordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
 				<label>
 					<!-- <span>Confirm Password</span> -->
 					<input id='cpassword' type='password' name='cpassword' placeholder='Confirm Password' required/>
+					<span id='confirmPasswordValidity'><img src='red_circle.png' style='width: 20px; height: 20px;'/></span>
 				</label>
 
 				<br>
@@ -84,10 +89,12 @@ if(isset($_POST['submitted']) ){
 				
 			</form>
 		</div>
+		<span class='makesmallbigger smallmarginfromtop label'>Password should be of length between 6-16 characters. It should have atleast one numberic and one special character.</span>
 	</div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="jquery.placeholder.js"></script>
+<script type='text/javascript' src='commonJs.js'></script>
 <script>
 			// To test the @id toggling on password inputs in browsers that don’t support changing an input’s @type dynamically (e.g. Firefox 3.6 or IE), uncomment this:
 			// $.fn.hide = function() { return this; }
