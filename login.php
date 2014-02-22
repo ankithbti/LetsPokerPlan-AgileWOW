@@ -69,7 +69,7 @@ if(isset($_POST['submitted']) ){
 				</label>
 
 				<br>
-				<input type='hidden' name='submitted' />
+				<input type='hidden' name='submitted' class='hidden'/>
 				<input type='submit' class='btn btn-primary' value='Login' />
 			</form>
 		</div>
