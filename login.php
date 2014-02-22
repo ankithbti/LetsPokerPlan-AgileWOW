@@ -78,6 +78,7 @@ if(isset($_POST['submitted']) ){
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="jquery.placeholder.js"></script>
+<script type='text/javascript' src='commonJs.js'></script>
 <script>
 			// To test the @id toggling on password inputs in browsers that don’t support changing an input’s @type dynamically (e.g. Firefox 3.6 or IE), uncomment this:
 			// $.fn.hide = function() { return this; }
