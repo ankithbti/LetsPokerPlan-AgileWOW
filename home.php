@@ -8,7 +8,7 @@ session_start();
 
 ?>
 
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <head>
 	<title>Testing Home</title>
@@ -21,12 +21,14 @@ session_start();
 </head>
 
 <body>
-	<div class='container topRightMenu'>
-		<?php if(! isset($_SESSION['userId']) ){ ?>
-		<p class='right'> <a href='login.php'>Login</a> | <a href='register.php'>Register</a></p>
-		<?php }else{?>
-		<p class='right'> <span class='makelittlebigger label label-success'>Welcome <?php echo $_SESSION['userEmail'] ; ?></span> | <a href='logout.php'>Logout</a></p>
-		<?php } ?>
+	<div class='container'>
+		<div class='topRightMenu'>
+			<?php if(! isset($_SESSION['userId']) ){ ?>
+			<p class='right'> <a href='login.php'>Login</a> | <a href='register.php'>Register</a></p>
+			<?php }else{?>
+			<p class='right'> <span class='makelittlebigger label label-success'>Welcome <?php echo $_SESSION['userEmail'] ; ?></span> | <a href='logout.php'>Logout</a></p>
+			<?php } ?>
+		</div>
 	</div>
 	<div class='container topHeader' align='center'>
 		<h1>Welcome to Home of Testing System</h1>

@@ -1,9 +1,12 @@
 <?php
 
+include_once 'Constants.php' ;
 include_once 'BrowserLogger.php' ;
 include_once 'MySqlDBConnection.php' ;
 include_once 'User.php' ;
 
+
+echo APP_HASH_ALGO . PHP_EL ;
 $browserLogger_ = new BrowserLogger("Test.php");
 
 // $dbConn = new MySqlDBConnection(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
@@ -45,6 +48,9 @@ if($user->register()){
 	echo " Registerd successfully....." . PHP_EL ;
 }
 echo $user ;
+
+echo phpinfo();
+
 /*
 For SELECT, SHOW, DESCRIBE, EXPLAIN and other statements returning resultset, mysql_query() returns a resource on success, or FALSE on error.
 

@@ -8,6 +8,9 @@ body{
 	margin: 0px;
 	background-color: lightgray;
 	color: #333 ;
+	width:100%;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 0.8em;
 }
 
 
@@ -36,6 +39,16 @@ hr{
 	border-top-width: 1px;
 }
 
+.container{
+	width: 90%;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.clearFloat{
+	clear: both ;
+}
+
 /**
 --------------------------------
 CSS for Home Page
@@ -43,12 +56,11 @@ CSS for Home Page
 **/
 
 .topRightMenu{
-	position: relative;
 	margin-top: 10px;
 }
 
 .topRightMenu p {
-	font-size: 1.5em;
+	font-size: 1.1em;
 }
 
 

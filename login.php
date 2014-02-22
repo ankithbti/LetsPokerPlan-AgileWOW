@@ -13,7 +13,7 @@ if(isset($_SESSION['userId']) ){
 
 ?>
 
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <head>
 	<title>Testing Login</title>
@@ -21,8 +21,6 @@ if(isset($_SESSION['userId']) ){
 	<link rel='stylesheet' type='text/css' href='res/bootstrap/css/bootstrap-responsive.css' />
 	<link rel='stylesheet' type='text/css' href='commonCss.css' />
 
-	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
-	<script type='text/javascript' src='commonJs.js'></script>
 </head>
 
 <body>
@@ -44,6 +42,7 @@ if(isset($_POST['submitted']) ){
 		$_SESSION['userId'] = $user->getId() ;
 		$_SESSION['userEmail'] = $user->getEmail() ;
 		$_SESSION['userRole'] = $user->getRole() ;
+		echo APP_USER_LOGIN_SUCCESS_URL . PHP_EL ;
 		header("Location: " . APP_USER_LOGIN_SUCCESS_URL);
 	}else{
 		echo "<div class='container' align='center'><span class='makebigger label label-warning'>" . $user->getAuthError() . "</span><hr></div>" ;
@@ -75,6 +74,30 @@ if(isset($_POST['submitted']) ){
 			</form>
 		</div>
 	</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="jquery.placeholder.js"></script>
+<script>
+			// To test the @id toggling on password inputs in browsers that don’t support changing an input’s @type dynamically (e.g. Firefox 3.6 or IE), uncomment this:
+			// $.fn.hide = function() { return this; }
+			// Then uncomment the last rule in the <style> element (in the <head>).
+			$(function() {
+				// Invoke the plugin
+				$('input, textarea').placeholder();
+				// That’s it, really.
+				// Now display a message if the browser supports placeholder natively
+				// var html;
+				// if ($.fn.placeholder.input && $.fn.placeholder.textarea) {
+				// 	html = '<strong>Your current browser natively supports <code>placeholder</code> for <code>input</code> and <code>textarea</code> elements.</strong> The plugin won’t run in this case, since it’s not needed. If you want to test the plugin, use an older browser ;)';
+				// } else if ($.fn.placeholder.input) {
+				// 	html = '<strong>Your current browser natively supports <code>placeholder</code> for <code>input</code> elements, but not for <code>textarea</code> elements.</strong> The plugin will only do its thang on the <code>textarea</code>s.';
+				// }
+				// if (html) {
+				// 	$('<p class="note">' + html + '</p>').insertAfter('form');
+				// }
+			});
+</script>
 
 </body>
 
