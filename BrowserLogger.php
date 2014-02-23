@@ -8,7 +8,6 @@ include_once 'GenericLogger.php' ;
 
 class BrowserLogger extends GenericLogger{
 
-
 	// Constructor
 	public function __construct($name){
 		parent::__construct($name);

@@ -5,7 +5,6 @@ Date:	17 Feb 2014
 */
 
 include_once 'DBConnection.php' ;
-include_once 'BrowserLogger.php' ;
 include_once 'FileLogger.php' ;
 
 class MySqlDBConnection implements DBConnection
@@ -16,24 +15,37 @@ class MySqlDBConnection implements DBConnection
 	private $dbName_ ;
 	private $dbHost_ ;
 	private $fileLogger_ ;
-	private $browserLogger_ ;
+	
 	private $resultSet_ ;
 	private $isConnected_ ;
 
-	public function __construct($user, $pass, $dbName, $dbHost)
+	private static $dbInstance_ ;
+	private static $instanceCount_ ;
+
+	private function __construct($user, $pass, $dbName, $dbHost)
 	{
 		$this->dbUser_ = $user ;
 		$this->dbPassword_ = $pass ;
 		$this->dbName_ = $dbName ;
 		$this->dbHost_ = $dbHost ;
-		$this->browserLogger_ = new BrowserLogger(get_class());
-		$this->fileLogger_ = new FileLogger(get_class());
+		$this->fileLogger_ = FileLogger::getInstance(get_class());
 		$this->isConnected_ = false ;
+	}
+
+	public static function getInstance($user, $pass, $dbName, $dbHost){
+		if( ! static::$dbInstance_ ){
+			static::$dbInstance_ = new MySqlDBConnection($user, $pass, $dbName, $dbHost) ;
+		}
+		++static::$instanceCount_ ;
+		return static::$dbInstance_ ;
 	}
 
 	public function __destruct()
 	{
-		$this->disconnect();
+		--static::$instanceCount_ ;
+		if(static::$instanceCount_ == 0 ){
+			$this->disconnect();
+		}
 	}
 
 	public function connect()
@@ -52,7 +64,6 @@ class MySqlDBConnection implements DBConnection
 			return false ;
 		}
 		$this->fileLogger_->log(LogLevel::$DEBUG, 'Connected to  database : ' . $this->dbName_ . ' successfully. ');
-		//$this->browserLogger_->log(LogLevel::$DEBUG, 'Connected to database : ' . $this->dbName_ . ' successfully. ');
 		$this->isConnected_ = true ;
 		return true ;
 	}

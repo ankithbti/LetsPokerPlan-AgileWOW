@@ -1,17 +1,15 @@
 <?php
 
 include_once 'Constants.php' ;
-include_once 'BrowserLogger.php' ;
 include_once 'MySqlDBConnection.php' ;
 include_once 'User.php' ;
 
 
 echo APP_HASH_ALGO . PHP_EL ;
-$browserLogger_ = new BrowserLogger("Test.php");
 
-// $dbConn = new MySqlDBConnection(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
+// $dbConn = MySqlDBConnection::getInstance(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
 // if($dbConn->connect()){
-// 	$browserLogger_->log(LogLevel::$DEBUG, 'Connecte to DB :: ' . APP_DB_MYSQL_HOST);
+
 // }
 
 // to use alter query

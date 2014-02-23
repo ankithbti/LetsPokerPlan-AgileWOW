@@ -2,6 +2,7 @@
 
 include_once 'Constants.php';
 include_once 'User.php';
+include_once 'Mailer.php';
 
 ob_start();
 session_start();
@@ -25,7 +26,7 @@ if(isset($_SESSION['userId']) ){
 <body>
 
 	<div class='container topRightMenu'>
-		<p class='right'><a href='login.php'>Login</a> | <a href='home.php'>Back</a></p>
+		<p class='right'><a href='login.php'>Login</a> | <a href='forgotPassword.php'>Forgot Password</a> | <a href='home.php'>Back</a></p>
 	</div>
 
 	<div class='container' id='registerFormErrors' align='center'>
@@ -45,11 +46,33 @@ if(isset($_POST['submitted']) ){
 		$user = new User($email, $pass, "Local");
 		// //echo $user . PHP_EL ;
 		if($user->register()){
-			echo "<div class='container' align='center'><span class='makebigger label label-info'>
-				User registered successfully. You can login now.
-			</span><hr></div>" ;
-			
-			exit(0);
+
+			$activationLink = "http://www.fitied.com/letspokerplan/activateAccount.php?userId=" . $user->getId() ;
+			$body = "<font color='gray' size='3px' face='tahoma'>";
+            $body .= "Hi" . ",<br/><br/>Greetings from LetsPokerPlan Automated System.<br/><br/>";
+            $body .= " Thanks for registering with us.<br/> Please click on the below link to activate your account:" ;
+            $body .= "<br><a href='" . $activationLink . "' target='_blank'>Click to activate</a>";
+            $body .= "<br/><br/>" ;
+            $body .= "Thanks & Regards<br/><b>Lets Poker Plan</b>";
+            $body .= "</font>" ;
+            date_default_timezone_set('UTC');
+    		$curr_date = date(DATE_RFC822);
+            $subject = "Thanks for registering with LetsPokerPlan @ " . $curr_date ;
+            $mailer = Mailer::getInstance();
+            $from = "admin@fitied.com" ;
+            if($mailer->sendMail($email, $from, $subject, $body)){
+            	echo "<div class='container' align='center'><span class='makebigger label label-info'>
+					User registered successfully.<br><br>An e-mail has been sent to you with an activation link. Please click on that link to activate your account.
+				</span><hr></div>" ;
+            }else{
+            	// Email not send properly. :(
+            	echo "<div class='container' align='center'><span class='makebigger label label-info'>
+					User registered successfully. But we are sorry that we could not sent you the email with activation link. Will contact you soon for assistance. Till then Chill out!!!!!
+				</span><hr></div>" ;
+				$logger_ = FileLogger::getInstance("Register.php");
+				$logger_->log(LogLevel::$ERROR, " Could not send email after successful registration for email : " . $email);
+            }
+            exit(0);
 		}else{
 			echo "<div class='container' align='center'><span class='makebigger label label-warning'>" . $user->getRegError() . "</span><hr></div>" ;
 		}

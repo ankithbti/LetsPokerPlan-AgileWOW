@@ -24,15 +24,28 @@ session_start();
 	<div class='container'>
 		<div class='topRightMenu'>
 			<?php if(! isset($_SESSION['userId']) ){ ?>
-			<p class='right'> <a href='login.php'>Login</a> | <a href='register.php'>Register</a></p>
+			<p class='right'> <a href='login.php'>Login</a> | <a href='register.php'>Register</a> | <a href='forgotPassword.php'>Forgot Password</a></p>
 			<?php }else{?>
-			<p class='right'> <span class='makelittlebigger label label-success'>Welcome <?php echo $_SESSION['userEmail'] ; ?></span> | <a href='logout.php'>Logout</a></p>
+			<p class='right'> <span class='makelittlebigger label label-success'>Welcome <?php echo $_SESSION['userEmail'] ; ?></span> | <a href='changePassword.php'>Change Password</a> | <a href='logout.php'>Logout</a></p>
 			<?php } ?>
 		</div>
 	</div>
 	<div class='container topHeader' align='center'>
 		<h1>Welcome to Home of Testing System</h1>
 	</div>
+
+	<?php if( isset($_SESSION['userId']) ){ ?>
+		<div class='container topHeader' align='center'>
+		<?php
+			if(isset($_SESSION['activeStatus']) && $_SESSION['activeStatus'] == 'VERIFIED'){
+				echo "<h3>Your account is active. Enjoy!!!!</h3>";
+			}else{
+				echo "<h3>Your account is not active yet.</h3>
+					<p>Did you click the activation link we have send you in email. If yes, please contact our support team.</p>";
+			}
+		?>
+		</div>
+	<?php } ?>
 
 </body>
 

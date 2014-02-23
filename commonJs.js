@@ -81,7 +81,59 @@ function isRegisterFormFilledCorrectly(){
         $('#registerFormErrors').css('display', 'none');
     }
     return !isError ;
+}
 
+function isChangePasswordFormFilledCorrectly(){
+    var passText = $('#mypass').val() ;
+    var confPassText = $('#cpass').val() ;
+    var errMsg = "<div>";
+    var isError = false ;
+    var validPass = false ;
+
+    if(! isValidPassword(passText) ){
+        isError = true ;
+        errMsg += "<span class='makesmallbigger label label-info'>Password is not Valid. </span><br>";
+    }else{
+        validPass = true ;
+    }
+    if(! isValidConfirmPassword(confPassText) ){
+        isError = true ;
+        if(validPass){
+            errMsg += "<span class='makesmallbigger label label-info'>Confirm Password does not match with Password. </span>"; 
+        }else{
+            errMsg += "<span class='makesmallbigger label label-info'>No valid password entered yet. </span>"; 
+        }
+    }
+    errMsg += "</div>" ;
+
+    if(isError){
+        $('#changePasswordFormErrors').html(errMsg);
+        $('#changePasswordFormErrors').css('display', 'block');
+    }else{
+        $('#changePasswordFormErrors').html("");
+        $('#changePasswordFormErrors').css('display', 'none');
+    }
+    return !isError ;
+}
+
+function isforgotPasswordFormFilledCorrectly(){
+    var emailText = $('#email').val() ;
+    var errMsg = "<div>";
+    var isError = false ;
+    if( ! isValidEmailAddress(emailText) ){
+        isError = true ;
+        errMsg += "<span class='makesmallbigger label label-info'>Email Address is not Valid. </span><br>" ;
+    }
+    errMsg += "</div>" ;
+
+    if(isError){
+        $('#forgotPasswordFormErrors').html(errMsg);
+        $('#forgotPasswordFormErrors').css('display', 'block');
+    }else{
+        $('#forgotPasswordFormErrors').html("");
+        $('#forgotPasswordFormErrors').css('display', 'none');
+    }
+    return !isError ;
 }
 
 function isValidEmailAddress(emailAddress) {
@@ -123,8 +175,22 @@ $(document).ready(function(){
 
     $('#loginFormErrors').html("");
     $('#registerFormErrors').html("");
+    $('#changePasswordFormErrors').html("");
+    $('#forgotPasswordFormErrors').html("");
     
     $('#email').keyup(function(){
+        formFieldsValid = false ;
+        // Ajax call to check whether the entered value is valid or not
+        var inputText = $('#email').val() ;
+        if(! isValidEmailAddress(inputText) ){
+            $('#emailValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
+        }else{
+            $('#emailValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
+            formFieldsValid = true ;
+        }
+    });
+
+    $('#email').blur(function(){
         formFieldsValid = false ;
         // Ajax call to check whether the entered value is valid or not
         var inputText = $('#email').val() ;
@@ -151,8 +217,34 @@ $(document).ready(function(){
         }
     });
 
+    $('#mypass').blur(function(){
+        formFieldsValid = false ;
+        // Ajax call to check whether the entered value is valid or not
+        var text = $('#mypass').val() ;
+        if(! isValidPassword(text) ){
+            $('#passwordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
+            //alert("Invalid password : " + text);
+        }else{
+            $('#passwordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
+            //alert("Valid password : " + text);
+            formFieldsValid = true ;
+        }
+    });
+
 
     $('#cpass').keyup(function(){
+        formFieldsValid = false ;
+        // Ajax call to check whether the entered value is valid or not
+        var conf = $('#cpass').val() ;
+        if(! isValidConfirmPassword(conf) ){
+            $('#confirmPasswordValidity').html("<img src='red_circle.png' style='width: 20px; height: 20px;' />");
+        }else{
+            $('#confirmPasswordValidity').html("<img src='green_circle.png' style='width: 20px; height: 20px;' />");
+            formFieldsValid = true ;
+        }
+    });
+
+    $('#cpass').blur(function(){
         formFieldsValid = false ;
         // Ajax call to check whether the entered value is valid or not
         var conf = $('#cpass').val() ;

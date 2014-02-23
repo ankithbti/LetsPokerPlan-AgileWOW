@@ -5,14 +5,13 @@ Date:	17 Feb 2014
 */
 
 include_once 'Constants.php' ;
-include_once 'BrowserLogger.php' ;
 include_once 'FileLogger.php' ;
 include_once 'MySqlDBConnection.php' ;
 
 class User
 {
 	private $fileLogger_ ;
-    private $browserLogger_ ;
+    
     private $email_ ;
     private $hashedPassword_ ;
     private $source_ ;
@@ -20,14 +19,15 @@ class User
     private $role_ ;
     private $authError_ ;
     private $regError_ ;
+    private $activeStatus_ ;
 
 	public function __construct($email, $passwordStr, $source){
         $this->email_ = $email ;
         $this->hashedPassword_ = hash(APP_HASH_ALGO, $passwordStr, false);
         $this->source_ = $source ;
         $this->userId_ = hash(APP_HASH_ALGO, $this->email_ . ' ' . $this->source_, false);
-		$this->browserLogger_ = new BrowserLogger(get_class());
-        $this->fileLogger_ = new FileLogger(get_class());
+		
+        $this->fileLogger_ = FileLogger::getInstance(get_class());
 	}
 
 	public function __destruct(){
@@ -54,9 +54,37 @@ class User
         return $this->role_ ;
     }
 
+    public function getActiveStatus(){
+        return $this->activeStatus_ ;
+    }
+
+    public function changePassword($newPass){
+        $pass = hash(APP_HASH_ALGO, $newPass, false);
+        $dbConn = MySqlDBConnection::getInstance(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
+        if(! $dbConn->connect())
+        {
+            $message = ' Failed to connect to database :  ' . APP_DB_MYSQL_NAME . ' on Host : ' . APP_DB_MYSQL_HOST . ' using User : ' . APP_DB_MYSQL_USER . ' using password: ' . APP_DB_MYSQL_PASS ;
+            $this->fileLogger_->log(LogLevel::$ERROR, $message);
+            return false ;
+        }
+
+        $query = "UPDATE users set password='" . $pass . "' where user_id='" . $this->userId_ . "'" ;
+        if($rowsEffected = $dbConn->runAlterQuery($query) ){
+            //echo $rowsEffected . PHP_EL ;
+            $message = ' Successfully updated password for email : ' . $this->email_ . ' user_id : ' . $this->userId_ ;
+            $this->fileLogger_->log(LogLevel::$DEBUG, $message);
+        }else{
+            $message = ' Failed to update password for email : ' . $this->email_ . ' user_id : ' . $this->userId_ ;
+            $this->fileLogger_->log(LogLevel::$ERROR, $message);
+            $this->regError_ = $message ;
+            return false ;
+        }
+        return true ;
+    }
+
     public function authenticateAndFill(){
         // Check here for the user entry in database
-        $dbConn = new MySqlDBConnection(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
+        $dbConn = MySqlDBConnection::getInstance(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
         if(! $dbConn->connect())
         {
             $message = ' Failed to connect to database :  ' . APP_DB_MYSQL_NAME . ' on Host : ' . APP_DB_MYSQL_HOST . ' using User : ' . APP_DB_MYSQL_USER . ' using password: ' . APP_DB_MYSQL_PASS ;
@@ -77,6 +105,7 @@ class User
                     // Match
                     // fill other fileds
                     $this->role_ = $row['role'] ;
+                    $this->activeStatus_ = $row['active_status'] ;
                 }
                 else
                 {
@@ -101,7 +130,7 @@ class User
 
     public function register(){
 
-        $dbConn = new MySqlDBConnection(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
+        $dbConn = MySqlDBConnection::getInstance(APP_DB_MYSQL_USER, APP_DB_MYSQL_PASS, APP_DB_MYSQL_NAME, APP_DB_MYSQL_HOST);
         if(! $dbConn->connect())
         {
             $message = ' Failed to connect to database :  ' . APP_DB_MYSQL_NAME . ' on Host : ' . APP_DB_MYSQL_HOST . ' using User : ' . APP_DB_MYSQL_USER . ' using password: ' . APP_DB_MYSQL_PASS ;

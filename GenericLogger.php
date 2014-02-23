@@ -11,13 +11,21 @@ include_once 'LogLevel.php' ;
 class GenericLogger implements Logger{
 
 	protected $loggerName_ ;
+    private static $instance_ ;
 
 	// Constructor
-	public function __construct($name){
+	private function __construct($name){
 		$this->loggerName_ = $name ;
 		date_default_timezone_set('UTC');
         // print "Creating " . get_class() . PHP_EL ;
 	}
+
+    public static function getInstance($name){
+        if(! self::$instance_){
+            self::$instance_ = new GenericLogger($name);
+        }
+        return self::$instance_ ;
+    }
 
 	// Destructor
 	public function __destruct(){

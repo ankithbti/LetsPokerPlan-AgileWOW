@@ -26,7 +26,7 @@ if(isset($_SESSION['userId']) ){
 <body>
 
 	<div class='container topRightMenu'>
-		<p class='right'><a href='register.php'>Register</a> | <a href='home.php'>Back</a></p>
+		<p class='right'><a href='register.php'>Register</a> | <a href='forgotPassword.php'>Forgot Password</a> | <a href='home.php'>Back</a></p>
 		<div class='clearFloat'></div>
 	</div>
 
@@ -46,6 +46,7 @@ if(isset($_POST['submitted']) ){
 		$_SESSION['userId'] = $user->getId() ;
 		$_SESSION['userEmail'] = $user->getEmail() ;
 		$_SESSION['userRole'] = $user->getRole() ;
+		$_SESSION['activeStatus'] = $user->getActiveStatus() ;
 		echo APP_USER_LOGIN_SUCCESS_URL . PHP_EL ;
 		header("Location: " . APP_USER_LOGIN_SUCCESS_URL);
 	}else{
